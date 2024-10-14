@@ -18,4 +18,19 @@ public class Similarity {
 	public static String editSimilarity(String word1, String word2) {
 		return editSimilarity(word1, word2, word1.length() - 1, word2.length() - 1);
 	}
+
+	public static int longestCommonPrefix(String word1, String word2) {
+		if (word2.startsWith(word1)) {
+			return word1.length();
+		} else if (word1.startsWith(word2)) {
+			return word2.length();
+		} else {
+			for (int i = 0; i < Math.min(word1.length(), word2.length()); i++) {
+				if (word1.charAt(i) != word2.charAt(i)) {
+					return i;
+				}
+			}
+		}
+		return 0;
+	}
 }
