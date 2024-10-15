@@ -19,7 +19,7 @@ public class PrefixDictionary {
 			this.word = word;
 		}
 
-		public boolean combine(String word) {
+		public void combine(String word) {
 			int lcp = Similarity.firstDiff(this.word, word);
 			this.leaf = false;
 			int idx;
@@ -40,7 +40,6 @@ public class PrefixDictionary {
 				}
 			}
 			this.word = this.word.substring(0, lcp);
-			return true;
 		}
 	}
 
