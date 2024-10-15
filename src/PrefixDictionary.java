@@ -20,7 +20,7 @@ public class PrefixDictionary {
 		}
 
 		public boolean combine(String word) {
-			int lcp = Similarity.longestCommonPrefix(this.word, word);
+			int lcp = Similarity.firstDiff(this.word, word);
 			this.leaf = false;
 			int idx;
 			if (lcp != this.word.length()) {
@@ -78,11 +78,20 @@ public class PrefixDictionary {
 		}
 	}
 
-	public boolean addWord(String word) {
+	public void addWord(String word) {
 		word = word.trim().toLowerCase();
-		if (word.isEmpty() || !word.chars().allMatch(Character::isLetter)) return false;
+		if (word.isEmpty() || !word.chars().allMatch(Character::isLetter)) return;
 		root.combine(word);
-		return true;
+	}
+
+	public void addWords(String[] words) {
+		for (String word : words) {
+			addWord(word);
+		}
+	}
+
+	public void addWords(Iterable<String> words) {
+		words.forEach(this::addWord);
 	}
 
 	public boolean checkWord(String word) {
@@ -100,7 +109,7 @@ public class PrefixDictionary {
 		Node currNode = root;
 		int lcp;
 		while (currNode != null && !word.isEmpty()) {
-			lcp = Similarity.longestCommonPrefix(currNode.word, word);
+			lcp = Similarity.firstDiff(currNode.word, word);
 			if (lcp != currNode.word.length() && lcp != word.length()) {
 				return null;
 			}
